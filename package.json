@@ -1,0 +1,16 @@
+{
+  "name": "gasulv-telegram-miniapp",
+  "version": "4.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server/index.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "telegram:setup": "node --env-file-if-exists=.env server/setup-bot.mjs",
+    "telegram:check": "node --env-file-if-exists=.env server/setup-bot.mjs --check",
+    "backup": "node --env-file-if-exists=.env server/backup.mjs"
+  }
+}

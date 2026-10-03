@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#c0281d"><title>СПБГАСУ Знакомства</title><script src="https://telegram.org/js/telegram-web-app.js"></script><link rel="stylesheet" href="style.css"></head>
+<body>
+<noscript><style>.splash{display:none}</style><p>Включите JavaScript в браузере, чтобы пользоваться приложением.</p></noscript>
+<section class="splash" id="splash" aria-label="Загрузка"><img src="logo.PNG" alt="СПБГАСУ"><h1>СПБГАСУ<br><span>Знакомства</span></h1><div class="loading-line"></div></section>
+<main class="app" id="app">
+<header class="topbar"><div class="brand"><span class="brand-image"><img src="logo.PNG" alt="Наш логотип"></span><span>СПБГАСУ<small>Знакомства</small></span></div><button class="icon-button notification-button" data-action="notifications" aria-label="Уведомления"><span data-icon="bell"></span><span id="notification-count" class="badge" hidden></span></button></header>
+<div id="connection-status" class="connection-status" role="status" hidden></div>
+<section class="screen" id="screen"></section>
+<nav class="bottom-nav" aria-label="Основное меню">
+<button class="nav-item" data-screen="discover"><span data-icon="cards"></span><span>Знакомства</span></button>
+<button class="nav-item" data-screen="likes"><span data-icon="heart"></span><span>Лайки</span></button>
+<button class="nav-item" data-screen="chats"><span data-icon="chat"></span><span>Чаты</span><span id="chat-count" class="nav-dot" hidden></span></button>
+<button class="nav-item" data-screen="profile"><span data-icon="user"></span><span>Профиль</span></button>
+</nav>
+</main>
+<dialog id="modal"><div class="modal-content"><button class="modal-close icon-button" data-action="close" aria-label="Закрыть">×</button><div id="modal-body"></div></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body></html>

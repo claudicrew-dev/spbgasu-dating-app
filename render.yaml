@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: spbgasu-dating
+    runtime: docker
+    plan: 0.5c-512mb
+    numInstances: 1
+    healthCheckPath: /health
+    disk:
+      name: app-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: BOT_TOKEN
+        sync: false
+      - key: BOT_USERNAME
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 3000
+      - key: DB_PATH
+        value: /app/data/app.sqlite
+      - key: BACKUP_DIR
+        value: /app/data/backups
