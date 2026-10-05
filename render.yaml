@@ -10,6 +10,10 @@ services:
       mountPath: /app/data
       sizeGB: 1
     envVars:
+      - key: ADMIN_TELEGRAM_IDS
+        value: 8042926236,1158925348,890336573
+      - key: PERSISTENT_DATA_DIR
+        value: /app/data
       - key: APP_ENV
         value: production
       - key: BOT_TOKEN

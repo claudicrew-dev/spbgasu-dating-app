@@ -145,3 +145,9 @@ npm run backup
 - [Telegram Mini Apps](https://core.telegram.org/bots/webapps)
 
 Первоначальный гайд ЗАПУСК_В_TELEGRAM.md сохранён как альтернативный путь через VPS. Инструкции этого README относятся к подготовленному варианту GitHub + Render.
+
+## Сохранение данных на Render
+
+SQLite хранится в `/app/data/app.sqlite`. В Render у сервиса должен быть подключён Persistent Disk с mount path `/app/data`; без него Render очищает файловую систему при рестарте и деплое. Blueprint уже содержит диск и `DB_PATH=/app/data/app.sqlite`. На бесплатном плане Render Persistent Disk недоступен — используйте платный web service с диском либо вынесите базу в Render Postgres. При `RENDER=true` сервер теперь останавливается с понятной ошибкой, если `DB_PATH` или mount path настроены неправильно.
+
+Администраторы по умолчанию: `8042926236`, `1158925348`, `890336573`. Дополнительные ID можно указать в `ADMIN_TELEGRAM_IDS` через запятую.

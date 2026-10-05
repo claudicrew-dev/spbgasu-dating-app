@@ -7,7 +7,7 @@ export function openDatabase(path) {
  if(path!==':memory:')chmodSync(path,0o600);
  db.exec('PRAGMA foreign_keys=ON; PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; PRAGMA synchronous=FULL;');
  const version=db.prepare('PRAGMA user_version').get().user_version;
- if(version>1)throw new Error('Версия базы новее сервера');
+ if(version>2)throw new Error('Версия базы новее сервера');
  if(version===0)db.exec(`BEGIN IMMEDIATE;
  CREATE TABLE users (
   id TEXT PRIMARY KEY, telegram_id TEXT NOT NULL UNIQUE, telegram_name TEXT NOT NULL DEFAULT '', username TEXT NOT NULL DEFAULT '',
@@ -37,6 +37,15 @@ export function openDatabase(path) {
  CREATE TABLE outbox(id INTEGER PRIMARY KEY AUTOINCREMENT,target TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,actor TEXT REFERENCES users(id) ON DELETE CASCADE,text TEXT NOT NULL,event TEXT NOT NULL,attempts INTEGER NOT NULL DEFAULT 0,next_at INTEGER NOT NULL,created_at INTEGER NOT NULL);
  CREATE INDEX outbox_due ON outbox(next_at);
  PRAGMA user_version=1; COMMIT;`);
+ if(version<2)db.exec(`BEGIN IMMEDIATE;
+ ALTER TABLE users ADD COLUMN theme TEXT NOT NULL DEFAULT 'system';
+ ALTER TABLE reports ADD COLUMN category TEXT NOT NULL DEFAULT 'other';
+ ALTER TABLE reports ADD COLUMN reviewed_by TEXT;
+ ALTER TABLE reports ADD COLUMN review_note TEXT NOT NULL DEFAULT '';
+ ALTER TABLE reports ADD COLUMN updated_at INTEGER;
+ CREATE TABLE report_evidence(id TEXT PRIMARY KEY,report_id INTEGER NOT NULL REFERENCES reports(id) ON DELETE CASCADE,mime TEXT NOT NULL,data BLOB NOT NULL);
+ CREATE TABLE moderation_log(id INTEGER PRIMARY KEY,admin_id TEXT NOT NULL,action TEXT NOT NULL,target TEXT NOT NULL,created_at INTEGER NOT NULL);
+ PRAGMA user_version=2; COMMIT;`);
  return db;
 }
 export function transaction(db,fn){db.exec('BEGIN IMMEDIATE');try{const result=fn();db.exec('COMMIT');return result;}catch(e){db.exec('ROLLBACK');throw e;}}
